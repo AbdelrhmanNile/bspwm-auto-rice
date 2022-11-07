@@ -1,7 +1,7 @@
 import os
 from rich import print
 
-deps = ["bspwm", "polybar", "sxhkd", "picom", "downgrade", "dmenu", "code", "neovim", "rofi", "dunst"]
+deps = ["bspwm", "polybar", "sxhkd", "picom", "downgrade", "dmenu", "code", "neovim", "rofi", "dunst", "alacrity", "feh"]
 
 
 def install_deps_pacman(deps):
@@ -17,7 +17,7 @@ def downgrade_rofi():
     
 def get_dots():
     cd_command =f"cd /home/{os.getlogin()}/.local/share"
-    git_command = "git clone repo"
+    git_command = "git clone https://github.com/AbdelrhmanNile/bspwm-auto-rice-dots.git"
     print(f"[bold red]Executing: {cd_command} && {git_command}")
     os.system(f"{cd_command} && {git_command}")
     
