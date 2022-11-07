@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "bspwm-auto-rice"
+version = "0.1.0-2"
+description = ""
+authors = ["AbdelrhmanNile <abdelrhmannile@gmail.com>"]
+readme = "README.md"
+packages = [{include = "bspwm_auto_rice"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+typer = "^0.7.0"
+rich = "^12.6.0"
+pywal = "^3.3.0"
+
+
+[tool.poetry.scripts]
+bspar = "bspwm_auto_rice.bspar:cli"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
