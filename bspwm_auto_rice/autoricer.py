@@ -33,6 +33,7 @@ def auto_rice(wallpaper: str, preset):
     pywal.export.every(final_colors)
 
     pywal.sequences.send(final_colors)
+    alacritty_conf(final_colors["colors"])
     pywal.reload.xrdb()
     reload_bspwm()
 
@@ -91,13 +92,15 @@ def back_up_usr_conf():
     sxhkd_bak_command = f"mv -r {usr_config_dir}/sxhkd {usr_config_dir}/sxhkd.bak"
     dunst_bak_command = f"mv -r {usr_config_dir}/dunst {usr_config_dir}/dunst.bak"
     rofi_bak_command = f"mv -r {usr_config_dir}/rofi {usr_config_dir}/rofi.bak"
+    alacritty_bak_command = f"mv {usr_config_dir}/alacritty/alacritty.yml {usr_config_dir}/alacritty/alacritty.yml.bak"
     
     print("[bold red]Backing up your config files...[/bold red]")
     command = f"""{bspwm_bak_command} & \
                 {polybar_bak_command} & \
                 {sxhkd_bak_command} & \
                 {dunst_bak_command} & \
-                {rofi_bak_command}"""
+                {rofi_bak_command} & \
+                {alacritty_bak_command}"""
                 
     print(f"[bold red]Running command: {command}")
     
@@ -117,5 +120,7 @@ def copy_fonts():
     
     copy_tree(f"{bspwm_auto_rice_local_repo}/fonts", f"{usr_local_share_dir}/fonts")
 
-def preset_theme():
-    pywal.theme.file
+def alacritty_conf(colors: dict):
+    template = open(f"{bspwm_auto_rice_local_repo}/templates/alacritty.yml", "r").readlines()
+    conf = "".join(template).format(**colors).strip("#")
+    pywal.export.util.save_file(conf, f"{usr_config_dir}/alacritty/alacritty.yml")

@@ -26,6 +26,5 @@ def set(wallpaper:str = typer.Option(..., "-w", "--wallpaper",help="Absolute pat
 def colors():
     pywal.theme.list_out()
     
-
 if __name__ == "__main__":
     cli()
