@@ -122,5 +122,6 @@ def copy_fonts():
 
 def alacritty_conf(colors: dict):
     template = open(f"{bspwm_auto_rice_local_repo}/templates/alacritty.yml", "r").readlines()
-    conf = "".join(template).format(**colors).strip("#")
+    conf = "".join(template).format(**colors)
+    conf = conf.replace("#", "")
     pywal.export.util.save_file(conf, f"{usr_config_dir}/alacritty/alacritty.yml")
