@@ -1,6 +1,8 @@
 ## bspwm auto rice [bspar]
 an automatice ricing script for bspwm (my dots)
 
+ONLY WORKS ON ARCH BASED DISTROS
+
 ## Installation
 ```pip install bspwm-auto-rice```
 
