@@ -4,6 +4,7 @@ import pywal
 from . import dependencies
 from . import autoricer
 from typing import Optional
+from rich import print
 
 cli = typer.Typer()
 
@@ -84,13 +85,19 @@ def colors(
 
 
 @cli.command(help="pulls the latest changes from dots repo")
-def update():
-    command = f"cd {autoricer.bspwm_auto_rice_local_repo} && git pull"
-    os.system(command)
+def update(
+    myself: Optional[bool] = typer.Option(None, "--self", "-s"),
+    dots: Optional[bool] = typer.Option(None, "--dots", "-d"),
+):
+    if dots:
+        command = f"cd {autoricer.bspwm_auto_rice_local_repo} && git pull"
+        os.system(command)
+    if myself:
+        command = f"pip install --user --upgrade bspwm-auto-rice"
+        os.system(command)
 
-
-def save():
-    pywal.theme.file
+    if myself == None and dots == None:
+        print("[bold red]wtf to update?\n\t-d : dots\n\t-s : bspar")
 
 
 if __name__ == "__main__":
