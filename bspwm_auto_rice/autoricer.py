@@ -15,7 +15,7 @@ pywal_cache_dir = f"/home/{user}/.cache/wal"
 bspwm_auto_rice_local_repo = f"/home/{user}/.local/share/bspwm-auto-rice"
 
 
-def auto_rice(wallpaper: str, preset):
+def auto_rice(wallpaper, preset):
 
     if (not os.path.isdir(bspwm_auto_rice_local_repo)) or (
         len(os.listdir(bspwm_auto_rice_local_repo)) == 0
@@ -40,20 +40,22 @@ def auto_rice(wallpaper: str, preset):
     pywal.reload.xrdb()
     reload_bspwm()
 
-    set_wallpaper(wallpaper)
+    if wallpaper != "":
+        set_wallpaper(wallpaper)
 
-    fix_oomox_gtk_colors()
     generate_gtk_theme()
     generate_icons_theme()
     set_themes()
 
 
 def reload_bspwm():
+    print("[bold]Reloading bspwm")
     os.system(f"sh {bspwmrc_path} > /dev/null")
     sleep(1)
 
 
 def set_wallpaper(wallpaper: str):
+    print("[bold]Changing wallpaper")
     pywal.wallpaper.set_wm_wallpaper(wallpaper)
     os.system(
         f"sed -i '/feh/d' {bspwmrc_path} && echo 'feh --bg-fill {wallpaper} &' >> {bspwmrc_path}"
@@ -72,18 +74,22 @@ def fix_oomox_gtk_colors():
 
 
 def generate_gtk_theme():
+    print("[bold]building GTK3 theme")
+    fix_oomox_gtk_colors()
     oomox_file_path = f"{pywal_cache_dir}/colors-oomox"
     gtk_theme_command = f"cd {bspwm_auto_rice_local_repo}/themes/gtk/materia && chmod +x change_color.sh && ./change_color.sh -o bspwm-auto-rice -t /home/{user}/.themes {oomox_file_path} > /dev/null"
     os.system(gtk_theme_command)
 
 
 def generate_icons_theme():
+    print("[bold]Building icons theme")
     oomox_file_path = f"{pywal_cache_dir}/colors-oomox"
     icons_theme_command = f"cd {bspwm_auto_rice_local_repo}/themes/icons/papirus && chmod +x change_color.sh && ./change_color.sh -o bspwm-auto-rice -d /home/{user}/.icons/bspwm-auto-rice {oomox_file_path} > /dev/null"
     os.system(icons_theme_command)
 
 
 def set_themes():
+    print("[bold]Setting themes")
     gtk3_ini_path = f"{usr_config_dir}/gtk-3.0/settings.ini"
     gtk_ini = open(gtk3_ini_path, "r").read()
     gtk_ini = gtk_ini.splitlines()
@@ -168,3 +174,8 @@ def alacritty_conf(colors: dict):
 
 def update_dots():
     command = f"cd {bspwm_auto_rice_local_repo} && git pull"
+
+
+def save_cs(name: str):
+    commad = f"cp {pywal_cache_dir}/colors.json {usr_config_dir}/wal/colorschemes/dark/{name}.json"
+    os.system(commad)

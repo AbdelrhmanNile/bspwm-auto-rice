@@ -53,14 +53,44 @@ def set(
 
 
 @cli.command(help="Lists all available colorschemes presets")
-def colors():
-    pywal.theme.list_out()
+def colors(
+    list_colors: bool = typer.Option(
+        False,
+        "-ls",
+        "--list",
+        help="Lists default coloschemes presets and user presets",
+    ),
+    use: str = typer.Option(
+        None, "-u", "--use", help="use a colorscheme without a wallpaper"
+    ),
+    save: str = typer.Option(
+        None,
+        "-s",
+        "--save",
+        help="Save the current colorscheme as a user defined preset",
+    ),
+):
+    if list_colors:
+        pywal.theme.list_out()
+
+    if use:
+        autoricer.auto_rice("", use)
+
+    if save:
+        autoricer.save_cs(save)
+
+    if list_colors == False and use == None and save == None:
+        pywal.theme.list_out()
 
 
 @cli.command(help="pulls the latest changes from dots repo")
 def update():
     command = f"cd {autoricer.bspwm_auto_rice_local_repo} && git pull"
     os.system(command)
+
+
+def save():
+    pywal.theme.file
 
 
 if __name__ == "__main__":
