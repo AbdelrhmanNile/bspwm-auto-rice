@@ -31,8 +31,8 @@ def auto_rice(wallpaper, preset):
     else:
         colors = pywal.theme.file(preset)
 
-    colors_list = list(colors["colors"].values())
-    final_colors = pywal.colors.colors_to_dict(colors_list, wallpaper)
+    # colors_list = list(colors["colors"].values())
+    final_colors = pywal.colors.colors_to_dict(colors, wallpaper)
     pywal.export.every(final_colors)
 
     pywal.sequences.send(final_colors)
