@@ -32,11 +32,11 @@ def auto_rice(wallpaper, preset):
         colors = pywal.theme.file(preset)
 
     # colors_list = list(colors["colors"].values())
-    final_colors = pywal.colors.colors_to_dict(colors, wallpaper)
-    pywal.export.every(final_colors)
+    # final_colors = pywal.colors.colors_to_dict(colors, wallpaper)
+    pywal.export.every(colors)
 
-    pywal.sequences.send(final_colors)
-    alacritty_conf(final_colors["colors"])
+    pywal.sequences.send(colors)
+    alacritty_conf(colors["colors"])
     pywal.reload.xrdb()
     reload_bspwm()
 
