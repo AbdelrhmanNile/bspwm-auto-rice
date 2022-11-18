@@ -37,6 +37,7 @@ def auto_rice(wallpaper, preset):
 
     pywal.sequences.send(colors)
     alacritty_conf(colors["colors"])
+    # betterdiscord_theme(colors["colors"])
     pywal.reload.xrdb()
     reload_bspwm()
 
@@ -163,6 +164,19 @@ def copy_fonts():
     copy_tree(f"{bspwm_auto_rice_local_repo}/fonts", f"{usr_local_share_dir}/fonts")
 
 
+def parse_templates(colors: dict, template_path: str):
+    template = open(template_path, "r").readlines()
+    conf = "".join(template).format(**colors)
+    return conf
+
+
+def parse_te(colors: dict, template_path: str):
+    template = open(template_path, "r").readlines()
+    for i, line in enumerate(template):
+        if line.startswith("/**/"):
+            template[i] = line.format(**colors)
+
+
 def alacritty_conf(colors: dict):
     template = open(
         f"{bspwm_auto_rice_local_repo}/templates/alacritty.yml", "r"
@@ -170,6 +184,20 @@ def alacritty_conf(colors: dict):
     conf = "".join(template).format(**colors)
     conf = conf.replace("#", "")
     pywal.export.util.save_file(conf, f"{usr_config_dir}/alacritty/alacritty.yml")
+
+
+def betterdiscord_theme(colors: dict):
+    template = open(
+        f"{bspwm_auto_rice_local_repo}/templates/comfywal.theme.css", "r"
+    ).readlines()
+    for i, line in enumerate(template):
+        if line.startswith("/**/"):
+            template[i] = line.format(**colors)
+
+    conf = "".join(template)
+    pywal.export.util.save_file(
+        conf, f"{usr_config_dir}/BetterDiscord/themes/comfywal.theme.css"
+    )
 
 
 def update_dots():

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "bspwm-auto-rice"
-version = "0.1.1"
+version = "0.1.2-3"
 description = ""
 authors = ["AbdelrhmanNile <abdelrhmannile@gmail.com>"]
 readme = "README.md"
